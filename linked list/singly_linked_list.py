@@ -1,7 +1,6 @@
 class Node:
-    def __init__(self, value: int, prev=None, next=None) -> None:
+    def __init__(self, value: int, next=None) -> None:
         self.value: int = value # 데이터
-        self.prev: Node = prev   # 이전 노드를 참조한다.
         self.next: Node = next   # 다음 노드를 참조한다.
 
     def __str__(self) -> str:
