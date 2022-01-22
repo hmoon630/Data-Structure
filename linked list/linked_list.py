@@ -7,38 +7,33 @@ class Node:
     def __str__(self) -> str:
         return str(self.value)
 
+    def __repr__(self) -> str:
+        return f'<Node ({self.value})>'
+
 class SinglyLinkedList:
     def __init__(self, head: Node = None) -> None:
         self.head = head
     
-    def __str__(self) -> str:
-        values = []
+    def __iter__(self):
+        nodes = []
         temp = self.head
         while temp:
-            values.append(temp.value)
+            nodes.append(temp)
             temp = temp.next
-        return str(values)
-    def __len__(self) -> int:
-        count = 0
-        return count
+        return iter(nodes)
 
-    def size(self) -> int:
-        return self.__len__()
+    def __str__(self) -> str:
+        return str([i.value for i in self])
+
+    def __len__(self) -> int:
+        return len(list(self.__iter__()))
 
     def get(self, n: int) -> Node:
         ''' n번째 노드를 반환한다. '''
-        if n <= 0:
-            raise IndexError(f'{n}번째 노드는 존재하지 않습니다.')
-        temp = self.head
-        if temp is None:
-            raise IndexError(f'{n}번째 노드는 존재하지 않습니다.')
-
-        for _ in range(n - 1):
-            if temp.next is None:
-                raise IndexError(f'{n}번째 노드는 존재하지 않습니다.')
-            temp = temp.next
-
-        return temp
+        try:
+            return list(self.__iter__())[n - 1]
+        except IndexError:
+            raise IndexError(f'{n - 1}번째 노드는 존재하지 않습니다.')
 
     def insert(self, node: Node, n: int) -> Node:
         ''' n번째 위치에 새로운 노드를 삽입한다. 새롭게 삽입된 노드를 반환한다. '''
@@ -62,17 +57,20 @@ class SinglyLinkedList:
         temp.next = target.next
         return target
 
-ll = SinglyLinkedList(Node(1))
-for i in range(2, 6):
-    ll.insert(Node(i), i)
-print(ll)
-ll.delete(1)
-print(ll)
-ll.delete(3)
-print(ll)
-ll.delete(3)
-print(ll)
-ll.insert(Node(6), 2)
-print(ll)
-ll.delete(2)
-print(ll)
+if __name__ == "__main__":
+    ll = SinglyLinkedList(Node(1))
+    for i in range(2, 6):
+        ll.insert(Node(i), i)
+    print(ll)
+    ll.delete(1)
+    print(ll)
+    ll.delete(3)
+    print(ll)
+    ll.delete(3)
+    print(ll)
+    ll.insert(Node(6), 2)
+    print(ll)
+    ll.delete(2)
+    print(ll)
+    print(list(ll))
+    print(len(ll))
