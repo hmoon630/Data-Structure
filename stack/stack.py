@@ -1,25 +1,28 @@
-from operator import itemgetter
-from typing import ItemsView
+from ctypes import pointer
 
 
 class Stack:
     items = []
-    
+    pointer = -1
+
     def __init__(self) -> None:
         pass
 
     def top(self):
-        return self.items[-1]
+        return self.items[self.pointer]
 
     def pop(self):
-        return self.items.pop(-1)
+        item = self.items.pop(self.pointer)
+        self.pointer -= 1
+        return item
 
     def push(self, item):
+        self.pointer += 1
         self.items.append(item)
         return item
     
     def empty(self):
-        return False if len(self.items) else True
+        return False if self.pointer else True
 
 if __name__ == "__main__":
     s = Stack()
@@ -31,7 +34,6 @@ if __name__ == "__main__":
     print(s.empty())
     
     print(s.push(7))
-    print(s.top())
 
     print(s.pop())
     print(s.pop())
