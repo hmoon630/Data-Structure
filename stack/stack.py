@@ -1,6 +1,3 @@
-from ctypes import pointer
-
-
 class Stack:
     items = []
     pointer = -1
